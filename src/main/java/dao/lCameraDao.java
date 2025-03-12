@@ -9,7 +9,7 @@ public interface lCameraDao {
 
 	public List<Camera> CamerasParMC(String mc);
 
-	public Camera getCamera(Long id);
+	public Camera getCamera(int id);
 
 	public Camera updateCamera(Camera p);
 

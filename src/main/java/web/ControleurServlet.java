@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.Response;
-
 import dao.lCameraDao;
 import dao.CameraDaolmpl;
 import PhotoShooting.entities.Camera;
@@ -23,7 +21,6 @@ public class ControleurServlet extends HttpServlet {
         metier = new CameraDaolmpl();
     }
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,10 +47,11 @@ public class ControleurServlet extends HttpServlet {
             double resolution = Double.parseDouble(request.getParameter("resolution"));
             Camera camera = metier.save(new Camera(type, name, resolution));
             request.setAttribute("camera", camera);
-            request.getRequestDispatcher("confirmation.jsp").forward(request, response);
+            /*request.getRequestDispatcher("confirmation.jsp").forward(request, response);*/
+            response.sendRedirect("chercher.do?motCle=");
         } 
         else if (path.equals("/editer.do")) {
-            Long id = Long.parseLong(request.getParameter("id"));
+            int id = Integer.parseInt(request.getParameter("id")); 
             Camera camera = metier.getCamera(id);
             request.setAttribute("camera", camera);
             request.getRequestDispatcher("editerCamera.jsp").forward(request, response);
@@ -63,14 +61,13 @@ public class ControleurServlet extends HttpServlet {
             String type = request.getParameter("type");
             String name = request.getParameter("name");
             double resolution = Double.parseDouble(request.getParameter("resolution"));
-            Camera camera = new Camera(id,type, name, resolution);
+            Camera camera = new Camera(id, type, name, resolution);
             metier.updateCamera(camera);
             request.setAttribute("camera", camera);
-       
             response.sendRedirect("chercher.do?motCle=");
         }
         else if (path.equals("/supprimer.do")) {
-        	int id = Integer.parseInt(request.getParameter("id"));
+            int id = Integer.parseInt(request.getParameter("id")); 
             metier.deleteCamera(id);
             response.sendRedirect("chercher.do?motCle=");
         } 
@@ -78,7 +75,6 @@ public class ControleurServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

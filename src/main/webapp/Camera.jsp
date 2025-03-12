@@ -17,7 +17,7 @@
             <div class="card-header">Recherche des Cameras</div>
             <div class="card-body">
                 <form action="chercher.do" method="get">
-                    <label>Mot Clé</label>
+                    <label>Rechercher avec le nom : </label>
                     <input type="text" name="motCle" value="${model.motCle}" />
                     <button type="submit" class="btn btn-primary">Chercher</button>
                 </form>
@@ -27,6 +27,8 @@
                         <th>Type</th>
                         <th>Name</th>
                         <th>Resolution</th>
+                        <th>Action Supprimer</th>
+                        <th>Action Editer</th>
                     </tr>
                     <c:forEach items="${model.cameras}" var="p">
                         <tr>
